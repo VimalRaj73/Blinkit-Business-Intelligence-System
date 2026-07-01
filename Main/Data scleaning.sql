@@ -282,3 +282,35 @@ WHERE c.customer_id IS NULL;
 SELECT i.product_id, p.product_id FROM inventory i
 LEFT JOIN products p ON i.product_id = p.product_id
 WHERE p.product_id IS NULL;
+
+-- BUSINESS RULE VALIDATION
+
+-- Are there any negative delivery time ?
+
+SELECT *
+FROM delivery_performance
+WHERE delivery_time < 0;
+
+-- Are ratings only between 1 and 5 ?
+
+SELECT *
+FROM customer_feedback
+WHERE rating NOT BETWEEN 1 AND 5;
+
+-- Are there any negative price ?
+
+SELECT *
+FROM products
+WHERE price < 0;
+
+-- Is MRP always greater than or equal to Price?
+
+SELECT *
+FROM products
+WHERE mrp < price; 
+
+-- Is Damaged stock greater than stock received ?
+
+SELECT *
+FROM inventory
+WHERE damaged_stock > stock_received;
